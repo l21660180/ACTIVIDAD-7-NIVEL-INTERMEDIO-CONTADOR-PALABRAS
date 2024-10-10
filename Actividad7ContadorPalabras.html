@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Palabras</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Importamos Tailwind CSS -->
+    <style>
+        /* Color personalizado del placeholder */
+        textarea::placeholder {
+            color: #999;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen bg-teal-500"> <!-- Cambiado el color de fondo al del botón -->
+
+    <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full text-center"> <!-- Contenedor principal -->
+        <h1 class="text-2xl font-semibold text-gray-700 mb-6">Contador de Palabras y Caracteres</h1> <!-- Título principal -->
+
+        <!-- Área de texto para que el usuario ingrese texto -->
+        <textarea id="textArea" rows="6" placeholder="Escribe aquí tu texto..." 
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-300 focus:border-teal-500" 
+                  autofocus></textarea> <!-- Textarea -->
+
+        <!-- Contador de palabras y caracteres -->
+        <div class="bg-blue-50 border border-blue-200 text-blue-800 font-bold p-4 rounded-lg mt-4">
+            Palabras: <span id="wordCount">0</span> | Caracteres: <span id="charCount">0</span>
+        </div>
+
+        <!-- Botón para resetear el área de texto -->
+        <button id="resetButton" 
+                class="w-full bg-teal-500 text-white font-semibold p-3 rounded-lg mt-4 hover:bg-teal-600">
+            Resetear
+        </button>
+    </div>
+
+    <script>
+        const textArea = document.getElementById('textArea'); // Captura el área de texto
+        const wordCount = document.getElementById('wordCount'); // Captura el contador de palabras
+        const charCount = document.getElementById('charCount'); // Captura el contador de caracteres
+        const resetButton = document.getElementById('resetButton'); // Captura el botón de resetear
+
+        // Función para contar palabras y caracteres (sin contar los espacios)
+        function countWordsAndChars() {
+            const text = textArea.value.trim(); // Obtener el texto y eliminar espacios en blanco al inicio/final
+            const words = text === '' ? 0 : text.split(/\s+/).filter(word => word !== '').length; // Cuenta las palabras separadas por espacios
+            const characters = text.replace(/\s+/g, '').length; // Elimina los espacios y cuenta los caracteres restantes
+
+            wordCount.textContent = words; // Actualizar el contador de palabras
+            charCount.textContent = characters; // Actualizar el contador de caracteres
+        }
+
+        // Evento para contar las palabras y caracteres cada vez que el usuario escribe en el textarea
+        textArea.addEventListener('input', countWordsAndChars);
+
+        // Evento para resetear el área de texto y contadores
+        resetButton.addEventListener('click', () => {
+            textArea.value = ''; // Limpiar el área de texto
+            wordCount.textContent = '0'; // Reiniciar el contador de palabras
+            charCount.textContent = '0'; // Reiniciar el contador de caracteres
+        });
+    </script>
+
+</body>
+</html>
